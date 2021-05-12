@@ -2,9 +2,10 @@
 
 // setup hours array of stores operational hours
 let hours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'];
+let totalCookiesCompany = [];
 
 // grab the <ul> node from the DOM to append to later
-let listContainer = document.getElementById('data-section');
+let listContainer = document.getElementById('data-container');
 
 // Seattle Store Object
 let seattle = {
@@ -28,22 +29,23 @@ let seattle = {
     }
   },
   render: function() {
-    // run calCookiesPerDay function to build data
+    // run calcCookiesPerDay function to build data line to display
     this.calcCookiesPerDay();
     let dataArray = [];
     for (let i = 0; i < hours.length; i++) {
       let dataLine = `${hours[i]}: ${this.cookiesByHourArray[i]} cookies`;
-      console.log('dataline: ' + dataLine);
       dataArray.push(dataLine);
     }
     dataArray.push(`Total: ${this.dailyCookieTotal} cookies`);
+    totalCookiesCompany.push(this.dailyCookieTotal);
 
     // build DOM elements required
     let storeSection = document.createElement('section');
-    let ulEl = document.createElement('ul');
+    storeSection.className = 'data-section';
     let storeNameH2El = document.createElement('h2');
+    let ulEl = document.createElement('ul');
     storeNameH2El.textContent = this.storeName;
-    ulEl.appendChild(storeNameH2El);
+    storeSection.appendChild(storeNameH2El);
     storeSection.appendChild(ulEl);
     listContainer.appendChild(storeSection);
 
@@ -83,17 +85,18 @@ let tokyo = {
     let dataArray = [];
     for (let i = 0; i < hours.length; i++) {
       let dataLine = `${hours[i]}: ${this.cookiesByHourArray[i]} cookies`;
-      console.log('dataline: ' + dataLine);
       dataArray.push(dataLine);
     }
     dataArray.push(`Total: ${this.dailyCookieTotal} cookies`);
+    totalCookiesCompany.push(this.dailyCookieTotal);
 
     // build DOM elements required
     let storeSection = document.createElement('section');
-    let ulEl = document.createElement('ul');
+    storeSection.className = 'data-section';
     let storeNameH2El = document.createElement('h2');
+    let ulEl = document.createElement('ul');
     storeNameH2El.textContent = this.storeName;
-    ulEl.appendChild(storeNameH2El);
+    storeSection.appendChild(storeNameH2El);
     storeSection.appendChild(ulEl);
     listContainer.appendChild(storeSection);
 
@@ -133,17 +136,18 @@ let dubai = {
     let dataArray = [];
     for (let i = 0; i < hours.length; i++) {
       let dataLine = `${hours[i]}: ${this.cookiesByHourArray[i]} cookies`;
-      console.log('dataline: ' + dataLine);
       dataArray.push(dataLine);
     }
     dataArray.push(`Total: ${this.dailyCookieTotal} cookies`);
+    totalCookiesCompany.push(this.dailyCookieTotal);
 
     // build DOM elements required
     let storeSection = document.createElement('section');
-    let ulEl = document.createElement('ul');
+    storeSection.className = 'data-section';
     let storeNameH2El = document.createElement('h2');
+    let ulEl = document.createElement('ul');
     storeNameH2El.textContent = this.storeName;
-    ulEl.appendChild(storeNameH2El);
+    storeSection.appendChild(storeNameH2El);
     storeSection.appendChild(ulEl);
     listContainer.appendChild(storeSection);
 
@@ -183,17 +187,18 @@ let paris = {
     let dataArray = [];
     for (let i = 0; i < hours.length; i++) {
       let dataLine = `${hours[i]}: ${this.cookiesByHourArray[i]} cookies`;
-      console.log('dataline: ' + dataLine);
       dataArray.push(dataLine);
     }
     dataArray.push(`Total: ${this.dailyCookieTotal} cookies`);
+    totalCookiesCompany.push(this.dailyCookieTotal);
 
     // build DOM elements required
     let storeSection = document.createElement('section');
-    let ulEl = document.createElement('ul');
+    storeSection.className = 'data-section';
     let storeNameH2El = document.createElement('h2');
+    let ulEl = document.createElement('ul');
     storeNameH2El.textContent = this.storeName;
-    ulEl.appendChild(storeNameH2El);
+    storeSection.appendChild(storeNameH2El);
     storeSection.appendChild(ulEl);
     listContainer.appendChild(storeSection);
 
@@ -233,17 +238,18 @@ let lima = {
     let dataArray = [];
     for (let i = 0; i < hours.length; i++) {
       let dataLine = `${hours[i]}: ${this.cookiesByHourArray[i]} cookies`;
-      console.log('dataline: ' + dataLine);
       dataArray.push(dataLine);
     }
     dataArray.push(`Total: ${this.dailyCookieTotal} cookies`);
+    totalCookiesCompany.push(this.dailyCookieTotal);
 
     // build DOM elements required
     let storeSection = document.createElement('section');
-    let ulEl = document.createElement('ul');
+    storeSection.className = 'data-section';
     let storeNameH2El = document.createElement('h2');
+    let ulEl = document.createElement('ul');
     storeNameH2El.textContent = this.storeName;
-    ulEl.appendChild(storeNameH2El);
+    storeSection.appendChild(storeNameH2El);
     storeSection.appendChild(ulEl);
     listContainer.appendChild(storeSection);
 
@@ -261,3 +267,4 @@ tokyo.render();
 dubai.render();
 paris.render();
 lima.render();
+console.log(totalCookiesCompany);
