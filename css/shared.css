@@ -29,7 +29,7 @@ main {
   justify-content: space-between;
 }
 
-.header-main__title a {
+.header-main__title {
   text-decoration: none;
   font-weight: bold;
   font-size: 1.5em;
