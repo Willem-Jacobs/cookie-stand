@@ -12,7 +12,7 @@ body {
 }
 
 main {
-  margin-top: 3.5rem;
+  margin-top: 2.5rem;
   min-height: calc(100vh - 3.5rem - 8rem);
 }
 
@@ -29,7 +29,7 @@ main {
   justify-content: space-between;
 }
 
-.header-main__title a {
+.header-main__title {
   text-decoration: none;
   font-weight: bold;
   font-size: 1.5em;
