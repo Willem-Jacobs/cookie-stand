@@ -14,4 +14,4 @@ Lab-06-Object Literals. To learn the use of Object Literals, DOM manipulation/se
 ### Reflections and Comments
 
 * Consider including the answers to your daily journal and submission questions here - TODO
-* This is also a good place to reflect on the tools and resources used and learned - TODO
+* I used MDN to check a few items on Math function.
