@@ -2,6 +2,7 @@
 
 // Global Variables
 let storeArray = [];
+let companyTotalByHour = [0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 let hourTotal = [];
 // let storeTotal = [];
 
@@ -28,7 +29,9 @@ Store.prototype.calcCookiesPerHour = function () {
     cookiesByHour = Math.round(this.randomCustomersPerHour() * this.avgCookiesPerCustomer);
     this.cookiesByHourArray.push(cookiesByHour);
     this.dailyCookieTotal += cookiesByHour;
+    companyTotalByHour[i] += cookiesByHour;
   }
+  console.log('Total by Hour: ' + companyTotalByHour);
 };
 
 // Store.prototype.updateGlobalTotal = function() {
