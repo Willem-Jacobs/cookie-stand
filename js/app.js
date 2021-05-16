@@ -3,8 +3,7 @@
 // Global Variables
 let storeArray = [];
 let companyTotalByHour = [0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-let hourTotal = [];
-// let storeTotal = [];
+let companyGrandTotal = 0;
 
 // Constructor for Store
 function Store(name, min, max, avg) {
@@ -29,25 +28,16 @@ Store.prototype.calcCookiesPerHour = function () {
     cookiesByHour = Math.round(this.randomCustomersPerHour() * this.avgCookiesPerCustomer);
     this.cookiesByHourArray.push(cookiesByHour);
     this.dailyCookieTotal += cookiesByHour;
-    companyTotalByHour[i] += cookiesByHour;
+    companyTotalByHour[i] = companyTotalByHour[i] + cookiesByHour;
   }
-  console.log('Total by Hour: ' + companyTotalByHour);
 };
-
-// Store.prototype.updateGlobalTotal = function() {
-//   for (let i = 0; i < storeArray.length; i++) {
-//     for (let j = 0; j < storeArray[i].this.cookiesByHour[j].length; j++) {
-//       let hours
-//     }
-//   }
-// };
 
 Store.prototype.renderTableStructure = function() {
   let tableContainer = document.getElementById('table-container');
   let tableEl = document.createElement('table');
   let tableHeadEl = document.createElement('thead');
   let tableHeadRowEl = document.createElement('tr');
-  let tableBodyEl = document.createElement('tbody');
+  let tableBodyEl = document.createElement('tbody'); 
   let tableFooterEl = document.createElement('tfoot');
   tableContainer.appendChild(tableEl);
   tableEl.appendChild(tableHeadEl);
@@ -85,6 +75,7 @@ Store.prototype.renderTableRow = function() {
   }
   tableRowDataEl = document.createElement('td');
   tableRowDataEl.textContent = this.dailyCookieTotal;
+  companyGrandTotal += this.dailyCookieTotal;
   tableRowEl.appendChild(tableRowDataEl);
 };
 
@@ -92,6 +83,14 @@ Store.prototype.renderTableFooter = function() {
   let tableFooterEl = document.querySelector('tfoot');
   let tableFooterRowEl = document.createElement('td');
   tableFooterRowEl.textContent = 'Total';
+  tableFooterEl.appendChild(tableFooterRowEl);
+  for (let i = 0; i < companyTotalByHour.length; i++) {
+    tableFooterRowEl = document.createElement('td');
+    tableFooterRowEl.textContent = companyTotalByHour[i];
+    tableFooterEl.appendChild(tableFooterRowEl);
+  }
+  tableFooterRowEl = document.createElement('td');
+  tableFooterRowEl.textContent = companyGrandTotal;
   tableFooterEl.appendChild(tableFooterRowEl);
 };
 
@@ -108,6 +107,9 @@ function run() {
       storeArray[i].renderTableRow();
     } else {
       storeArray[i].renderTableRow();
+    }
+    if (i === storeArray.length - 1) {
+      storeArray[i].renderTableFooter();
     }
   }
 }
