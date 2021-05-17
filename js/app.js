@@ -4,6 +4,8 @@
 let storeArray = [];
 let companyTotalByHour = [0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 let companyGrandTotal = 0;
+let storeTable = 'store-table-container';
+let tosserTable = 'tosse-table-container';
 
 // Constructor for Store
 function Store(name, min, max, avg) {
@@ -14,6 +16,7 @@ function Store(name, min, max, avg) {
   this.hours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'];
   this.dailyCookieTotal = 0;
   this.cookiesByHourArray = [];
+  this.cookieTossersPerHour = [];
   storeArray.push(this);
 }
 
@@ -24,20 +27,40 @@ Store.prototype.randomCustomersPerHour = function() {
 
 Store.prototype.calcCookiesPerHour = function () {
   let cookiesByHour = 0;
+  let tosser = 0;
   for (let i = 0; i < this.hours.length; i++) {
     cookiesByHour = Math.round(this.randomCustomersPerHour() * this.avgCookiesPerCustomer);
     this.cookiesByHourArray.push(cookiesByHour);
     this.dailyCookieTotal += cookiesByHour;
     companyTotalByHour[i] = companyTotalByHour[i] + cookiesByHour;
+    // Figure out number of tossers needed
+    tosser = Math.ceil(this.dailyCookieTotal / 20);
+    this.cookieTossersPerHour.push(tosser);
   }
 };
 
-Store.prototype.renderTableStructure = function() {
-  let tableContainer = document.getElementById('table-container');
+// Store.prototype.renderTableStructure = function() {
+//   let tableContainer = document.getElementById('table-container');
+//   let tableEl = document.createElement('table');
+//   let tableHeadEl = document.createElement('thead');
+//   let tableHeadRowEl = document.createElement('tr');
+//   let tableBodyEl = document.createElement('tbody'); 
+//   let tableFooterEl = document.createElement('tfoot');
+//   tableContainer.appendChild(tableEl);
+//   tableEl.appendChild(tableHeadEl);
+//   tableHeadEl.appendChild(tableHeadRowEl);
+//   tableEl.appendChild(tableBodyEl);
+//   tableEl.appendChild(tableFooterEl);
+// };
+
+Store.prototype.renderTableStructure = function (tableElement) {
+  let tableContainer = document.getElementById(tableElement);
   let tableEl = document.createElement('table');
   let tableHeadEl = document.createElement('thead');
   let tableHeadRowEl = document.createElement('tr');
-  let tableBodyEl = document.createElement('tbody'); 
+  tableHeadRowEl.id = tableElement.substring(0, 12) + 'row';
+  let tableBodyEl = document.createElement('tbody');
+  tableBodyEl.id = tableElement.substring(0, 12) + 'detail';
   let tableFooterEl = document.createElement('tfoot');
   tableContainer.appendChild(tableEl);
   tableEl.appendChild(tableHeadEl);
@@ -46,13 +69,13 @@ Store.prototype.renderTableStructure = function() {
   tableEl.appendChild(tableFooterEl);
 };
 
-Store.prototype.renderTableHeader = function() {
-  let tableHeaderRow = document.querySelector('thead>tr');
+Store.prototype.renderTableHeader = function(headerData, tableName) {
+  let tableHeaderRow = document.getElementById(`${tableName.substring(0,12)}row`);
   let tableHeaderEl = document.createElement('th');
   tableHeaderRow.appendChild(tableHeaderEl);
-  for (let i = 0; i < this.hours.length; i++) {
+  for (let i = 0; i < headerData.length; i++) {
     tableHeaderEl = document.createElement('th');
-    tableHeaderEl.textContent = this.hours[i];
+    tableHeaderEl.textContent = headerData[i];
     tableHeaderRow.appendChild(tableHeaderEl);
   }
   let tableHeaderTotalEl = document.createElement('th');
@@ -60,23 +83,45 @@ Store.prototype.renderTableHeader = function() {
   tableHeaderRow.appendChild(tableHeaderTotalEl);
 };
 
-Store.prototype.renderTableRow = function() {
-  this.calcCookiesPerHour();
-  let tableRowBody = document.querySelector('tbody');
-  let tableRowEl = document.createElement('tr');
-  let tableRowDataEl = document.createElement('td');
-  tableRowDataEl.textContent = this.storeName;
-  tableRowEl.appendChild(tableRowDataEl);
-  tableRowBody.appendChild(tableRowEl);
-  for (let i = 0; i < this.cookiesByHourArray.length; i++) {
+Store.prototype.renderTableRow = function(tableName) {
+  if (tableName === 'store-table-container') {
+    this.calcCookiesPerHour();
+    let tableRowBody = document.getElementById(`${tableName.substring(0,12)}detail`);
+    let tableRowEl = document.createElement('tr');
+    let tableRowDataEl = document.createElement('td');
+    tableRowDataEl.textContent = this.storeName;
+    tableRowEl.appendChild(tableRowDataEl);
+    tableRowBody.appendChild(tableRowEl);
+    for (let i = 0; i < this.cookiesByHourArray.length; i++) {
+      tableRowDataEl = document.createElement('td');
+      tableRowDataEl.textContent = this.cookiesByHourArray[i];
+      tableRowEl.appendChild(tableRowDataEl);
+    }
     tableRowDataEl = document.createElement('td');
-    tableRowDataEl.textContent = this.cookiesByHourArray[i];
+    tableRowDataEl.textContent = this.dailyCookieTotal;
+    companyGrandTotal += this.dailyCookieTotal;
     tableRowEl.appendChild(tableRowDataEl);
   }
-  tableRowDataEl = document.createElement('td');
-  tableRowDataEl.textContent = this.dailyCookieTotal;
-  companyGrandTotal += this.dailyCookieTotal;
-  tableRowEl.appendChild(tableRowDataEl);
+  if (tableName === 'tosse-table-container') {
+    let tableRowBody = document.getElementById(`${tableName.substring(0,12)}detail`);
+    let tableRowEl = document.createElement('tr');
+    let tableRowDataEl = document.createElement('td');
+    tableRowDataEl.textContent = this.storeName;
+    tableRowEl.appendChild(tableRowDataEl);
+    tableRowBody.appendChild(tableRowEl);
+    for (let i = 0; i < this.cookieTossersPerHour.length; i++) {
+      tableRowDataEl = document.createElement('td');
+      tableRowDataEl.textContent = this.cookieTossersPerHour[i];
+      tableRowEl.appendChild(tableRowDataEl);
+    }
+    tableRowDataEl = document.createElement('td');
+    // undex something not talked about in class yet;
+    tableRowDataEl.textContent = this.cookieTossersPerHour.reduce(function (acc, index) {
+      return acc + index;
+    }, 0);
+    companyGrandTotal += this.dailyCookieTotal;
+    tableRowEl.appendChild(tableRowDataEl);
+  }
 };
 
 Store.prototype.renderTableFooter = function() {
@@ -102,11 +147,15 @@ function run() {
   new Store('Lima', 2, 16, 4.6);
   for (let i = 0; i < storeArray.length; i++) {
     if (i === 0) {
-      storeArray[i].renderTableStructure();
-      storeArray[i].renderTableHeader();
-      storeArray[i].renderTableRow();
+      storeArray[i].renderTableStructure(storeTable);
+      storeArray[i].renderTableHeader(storeArray[i].hours, storeTable);
+      storeArray[i].renderTableStructure(tosserTable);
+      storeArray[i].renderTableHeader(storeArray[i].hours, tosserTable);
+      storeArray[i].renderTableRow(storeTable);
+      storeArray[i].renderTableRow(tosserTable);
     } else {
-      storeArray[i].renderTableRow();
+      storeArray[i].renderTableRow(storeTable);
+      storeArray[i].renderTableRow(tosserTable);
     }
     if (i === storeArray.length - 1) {
       storeArray[i].renderTableFooter();
