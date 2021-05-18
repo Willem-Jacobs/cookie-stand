@@ -4,6 +4,7 @@
 let storeArray = [];
 let companyTotalByHour = [0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 let companyGrandTotal = 0;
+let companyTosserTotal = [0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 let storeTable = 'store-table-container';
 let tosserTable = 'tosse-table-container';
 
@@ -36,6 +37,7 @@ Store.prototype.calcCookiesPerHour = function () {
     // Figure out number of tossers needed
     tosser = Math.ceil(this.dailyCookieTotal / 20);
     this.cookieTossersPerHour.push(tosser);
+    companyTosserTotal[i] = companyTosserTotal[i] + tosser;
   }
 };
 
@@ -62,6 +64,7 @@ Store.prototype.renderTableStructure = function (tableElement) {
   let tableBodyEl = document.createElement('tbody');
   tableBodyEl.id = tableElement.substring(0, 12) + 'detail';
   let tableFooterEl = document.createElement('tfoot');
+  tableFooterEl.id = tableElement.substring(0, 12) + 'foot';
   tableContainer.appendChild(tableEl);
   tableEl.appendChild(tableHeadEl);
   tableHeadEl.appendChild(tableHeadRowEl);
@@ -124,19 +127,32 @@ Store.prototype.renderTableRow = function(tableName) {
   }
 };
 
-Store.prototype.renderTableFooter = function() {
-  let tableFooterEl = document.querySelector('tfoot');
+Store.prototype.renderTableFooter = function(tableName) {
+  let tableFooterEl = document.getElementById(`${tableName.substring(0,12)}foot`);
   let tableFooterRowEl = document.createElement('td');
   tableFooterRowEl.textContent = 'Total';
   tableFooterEl.appendChild(tableFooterRowEl);
-  for (let i = 0; i < companyTotalByHour.length; i++) {
+  if (tableName === 'store-table-container') {
+    for (let i = 0; i < companyTotalByHour.length; i++) {
+      tableFooterRowEl = document.createElement('td');
+      tableFooterRowEl.textContent = companyTotalByHour[i];
+      tableFooterEl.appendChild(tableFooterRowEl);
+    }
     tableFooterRowEl = document.createElement('td');
-    tableFooterRowEl.textContent = companyTotalByHour[i];
+    tableFooterRowEl.textContent = companyGrandTotal;
+    tableFooterEl.appendChild(tableFooterRowEl);
+  } else if (tableName === 'tosse-table-container') {
+    for (let i = 0; i < companyTosserTotal.length; i++) {
+      tableFooterRowEl = document.createElement('td');
+      tableFooterRowEl.textContent = companyTosserTotal[i];
+      tableFooterEl.appendChild(tableFooterRowEl);
+    }
+    tableFooterRowEl = document.createElement('td');
+    tableFooterRowEl.textContent = companyTosserTotal.reduce(function (acc, index) {
+      return acc + index;
+    }, 0);
     tableFooterEl.appendChild(tableFooterRowEl);
   }
-  tableFooterRowEl = document.createElement('td');
-  tableFooterRowEl.textContent = companyGrandTotal;
-  tableFooterEl.appendChild(tableFooterRowEl);
 };
 
 function run() {
@@ -158,7 +174,8 @@ function run() {
       storeArray[i].renderTableRow(tosserTable);
     }
     if (i === storeArray.length - 1) {
-      storeArray[i].renderTableFooter();
+      storeArray[i].renderTableFooter(storeTable);
+      storeArray[i].renderTableFooter(tosserTable);
     }
   }
 }
