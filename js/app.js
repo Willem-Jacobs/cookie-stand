@@ -35,8 +35,8 @@ Store.prototype.calcCookiesPerHour = function () {
     this.dailyCookieTotal += cookiesByHour;
     companyTotalByHour[i] = companyTotalByHour[i] + cookiesByHour;
     // Figure out number of tossers needed
-    tosser = Math.ceil(this.dailyCookieTotal / 20);
-    this.cookieTossersPerHour.push(tosser);
+    tosser = Math.ceil(cookiesByHour / 20);
+    this.cookieTossersPerHour[i] = tosser;
     companyTosserTotal[i] = companyTosserTotal[i] + tosser;
   }
 };
