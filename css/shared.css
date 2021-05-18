@@ -1,6 +1,7 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto:100,400,900');
-@import url('https://fonts.googleapis.com/css?family=Anton');
-@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,400,900'); /* Sans Serif */
+@import url('https://fonts.googleapis.com/css?family=Anton'); /* San Stif */
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700'); /* San Serif */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300&display=swap'); /* Sarif */
 
 * {
   box-sizing: border-box;
@@ -8,7 +9,7 @@
 
 body {
   background-color: #b1a7a7;
-  font-family: Arial, Helvetica, sans-serif
+  font-family: 'Montserrat', Arial, Helvetica, sans-serif; /* Custom Font */
 }
 
 main {
@@ -33,7 +34,7 @@ main {
   text-decoration: none;
   font-weight: bold;
   font-size: 1.5em;
-  font-family: 'Montserrat';
+  font-family: 'Roboto Slab', Georgia, 'Times New Roman', Times, serif;
   color: #e6d9d9;
 }
 
@@ -54,6 +55,7 @@ main {
 
 .main-nav__item{
   margin: 0 1rem;
+  font-family: 'Roboto Slab';
 }
 
 .main-nav__item a {
