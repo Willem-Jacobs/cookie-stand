@@ -1,10 +1,10 @@
 'use strict';
 
 // Global Variables
-let storeArray = [];
-let companyTotalByHour = [0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+const storeArray = [];
+const companyTotalByHour = new Array(14).fill(0);
 let companyGrandTotal = 0;
-let companyTosserTotal = [0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+const companyTosserTotal = new Array(14).fill(0);
 let storeTable = 'store-table-container';
 let tosserTable = 'tosse-table-container';
 
@@ -40,20 +40,6 @@ Store.prototype.calcCookiesPerHour = function () {
     companyTosserTotal[i] = companyTosserTotal[i] + tosser;
   }
 };
-
-// Store.prototype.renderTableStructure = function() {
-//   let tableContainer = document.getElementById('table-container');
-//   let tableEl = document.createElement('table');
-//   let tableHeadEl = document.createElement('thead');
-//   let tableHeadRowEl = document.createElement('tr');
-//   let tableBodyEl = document.createElement('tbody'); 
-//   let tableFooterEl = document.createElement('tfoot');
-//   tableContainer.appendChild(tableEl);
-//   tableEl.appendChild(tableHeadEl);
-//   tableHeadEl.appendChild(tableHeadRowEl);
-//   tableEl.appendChild(tableBodyEl);
-//   tableEl.appendChild(tableFooterEl);
-// };
 
 Store.prototype.renderTableStructure = function (tableElement) {
   let tableContainer = document.getElementById(tableElement);
@@ -118,7 +104,7 @@ Store.prototype.renderTableRow = function(tableName) {
       tableRowEl.appendChild(tableRowDataEl);
     }
     tableRowDataEl = document.createElement('td');
-    // undex something not talked about in class yet;
+    // reduce method on array not discussed in class but I know about it
     tableRowDataEl.textContent = this.cookieTossersPerHour.reduce(function (acc, index) {
       return acc + index;
     }, 0);
@@ -148,6 +134,7 @@ Store.prototype.renderTableFooter = function(tableName) {
       tableFooterEl.appendChild(tableFooterRowEl);
     }
     tableFooterRowEl = document.createElement('td');
+    // reduce method on array not discussed in class but I know about it
     tableFooterRowEl.textContent = companyTosserTotal.reduce(function (acc, index) {
       return acc + index;
     }, 0);
