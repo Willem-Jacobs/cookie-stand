@@ -5,6 +5,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300&display=swap'); /* Sarif */
 
 /* general styling */
+
+* {
+  box-sizing: border-box;
+}
 body {
   background-color: bisque;
   font-family: Arial, Helvetica, sans-serif;
@@ -14,7 +18,7 @@ body {
 /* header */
 header {
   background-color: #444;
-  height: 80px;
+  height: 100px;
   width: 100%;
   position: fixed;
   top: 0;
@@ -22,9 +26,6 @@ header {
   background: #913710;
   padding: 0.5rem 1rem;
   z-index: 60;
-  /* display: flex; */
-  align-items: center;
-  justify-content: space-between;
 }
 
 nav {
@@ -76,7 +77,6 @@ h1 {
 
 .main-image__container {
   padding-top: 10px;
-
 }
 
 .main-image__container img {
@@ -88,13 +88,61 @@ main img {
   padding-top: 30px;
 }
 
-main li {
-  margin-left:30px;
+article p {
+  margin-top: 5px;
+  margin-left: 30px;
+  line-height: 20px;
+  font-style: italic;
+  overflow: auto;
+  height: 330px;
+}
+
+.main-store-hours {
+  margin-top: 30px;
+  margin-right: 30px;
+  border: 1px solid black;
+  height: 375px;
+  width: 300px;
   float: left;
 }
 
-main li:first-child {
-  margin-left: 0;
+.main-store-locations {
+  margin-top: 30px;
+  margin-right: 30px;
+  /* border: 1px solid black; */
+  height: 375px;
+  width: 300px;
+  float: left;
+}
+
+.main-store-locations h2 {
+  padding-bottom: 20px;
+  font-size: 30px;
+  text-align: center;
+  font-family: "Montserrat";
+  font-weight: bold;
+}
+
+.main-store-locations li {
+  padding-top: 5px;
+  text-align: center;
+  line-height: 25px;
+  display: block;
+  font-family: "Anton";
+  font-size: 1.5rem;
+}
+
+.main-store-locations p {
+  text-align: center;
+}
+
+.main-store-info {
+  margin-top: 30px;
+  margin-right: 0;
+  border: 1px solid black;
+  height: 375px;
+  width: 300px;
+  float: left;
 }
 
 main article {
@@ -106,15 +154,6 @@ main article {
 main h3 {
   margin-left: 30px;
   font-size: 20px;
-}
-
-main p {
-  margin-top: 5px;
-  margin-left: 30px;
-  line-height: 20px;
-  font-style: italic;
-  overflow: auto;
-  height: 330px;
 }
 
 article div {
