@@ -1,3 +1,73 @@
+/* Imports */
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,400,900'); /* Sans Serif */
+@import url('https://fonts.googleapis.com/css?family=Anton'); /* San Stif */
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700'); /* San Serif */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300&display=swap'); /* Sarif */
+
+/* general styling */
+
+* {
+  box-sizing: border-box;
+}
+body {
+  background-color: bisque;
+  font-family: Arial, Helvetica, sans-serif;
+  padding-top: 50px;
+}
+
+/* header */
+header {
+  background-color: #444;
+  height: 100px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #913710;
+  padding: 0.5rem 1rem;
+  z-index: 60;
+}
+
+nav {
+  width: 960px;
+  margin: auto;
+}
+
+.header-image {
+  margin-top: 2px;
+  float: left;
+  height: 70px;
+  width: 200px;
+}
+
+header li {
+  display: inline-block;
+  line-height: 80px;
+  margin-left: 90px;
+  font-family: "Montserrat";
+  font-weight: bold;
+}
+
+header li:first-child {
+  margin-left: 30px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #aaa;
+}
+
+nav a:hover {
+  color: #DAB37E;
+  border-bottom: 5px solid #DAB37E;
+}
+
+h2 {
+  padding-left: 150px;
+  font-size: 30px;
+  font-family: "Montserrat";
+  font-weight: 700;
+}
 table {
   border-collapse: collapse;
   width: 80%;
@@ -64,8 +134,20 @@ tfoot>td {
 tfoot>td:first-child {
   border-radius: 0;
 }
+footer {
+  height: 90px;
+  background-color: #444;
+  margin-top: 30px;
+}
 
-/* tfoot:hover {
-  color: black;
-  background-color: #f5f5f5;
-} */
+footer li {
+  display: inline-block;
+  line-height: 90px;
+  margin-left: 90px;
+  font-family: "Montserrat";
+  font-weight: bold;
+}
+
+footer li:first-child {
+  margin-left: 30px;
+}
