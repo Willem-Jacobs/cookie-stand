@@ -1,0 +1,178 @@
+/* Imports */
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,400,900'); /* Sans Serif */
+@import url('https://fonts.googleapis.com/css?family=Anton'); /* San Stif */
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700'); /* San Serif */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300&display=swap'); /* Sarif */
+
+/* general styling */
+
+* {
+  box-sizing: border-box;
+}
+body {
+  background-color: bisque;
+  font-family: Arial, Helvetica, sans-serif;
+  padding-top: 90px;
+}
+
+/* header */
+header {
+  background-color: #444;
+  height: 100px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #913710;
+  padding: 0.5rem 1rem;
+  z-index: 60;
+}
+
+nav {
+  width: 960px;
+  margin: auto;
+}
+
+.header-image {
+  margin-top: 2px;
+  float: left;
+  height: 70px;
+  width: 200px;
+}
+
+header li {
+  display: inline-block;
+  line-height: 80px;
+  margin-left: 90px;
+  font-family: "Montserrat";
+  font-weight: bold;
+}
+
+header li:first-child {
+  margin-left: 30px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #aaa;
+}
+
+nav a:hover {
+  color: #DAB37E;
+  border-bottom: 5px solid #DAB37E;
+}
+
+/* main */
+main {
+  width: 960px;
+  margin: auto;
+}
+
+h1 {
+  padding-top: 20px;
+  font-size: 60px;
+  text-align: center;
+  font-family: "Roboto Slab";
+}
+
+section li:nth-child(even) {
+  font-size: 15px;
+  font-family: Montserrat
+}
+.main-image__container {
+  padding-top: 10px;
+}
+
+.main-image__container img {
+  display: block;
+  margin: auto;
+}
+
+.main-image__picture {
+  padding-top: 30px;
+}
+
+.main-store-merch1 {
+  margin-top: 30px;
+  margin-right: 30px;
+  height: 375px;
+  width: 300px;
+  float: left;
+}
+
+.main-store-merch1 h2 {
+  padding-bottom: 20px;
+  font-size: 30px;
+  text-align: center;
+  font-family: "Montserrat";
+  font-weight: bold;
+}
+
+.main-store-merch__picture1 {
+  height: 325px;
+  width: 299px;
+  border-radius: 10px;
+}
+
+.main-store-merch2 {
+  margin-top: 30px;
+  margin-right: 30px;
+  height: 375px;
+  width: 300px;
+  float: left;
+}
+
+.main-store-merch2 h2 {
+  padding-bottom: 20px;
+  font-size: 30px;
+  text-align: center;
+  font-family: "Montserrat";
+  font-weight: bold;
+}
+
+.main-store-merch__picture2 {
+  height: 325px;
+  width: 299px;
+  border-radius: 10px;
+}
+
+.main-store-cookie {
+  margin-top: 30px;
+  margin-right: 0;
+  height: 375px;
+  width: 300px;
+  float: left;
+}
+
+.main-store-cookie h2 {
+  padding-bottom: 15px;
+  font-size: 30px;
+  text-align: center;
+  font-family: "Montserrat";
+  font-weight: bold;
+}
+
+.main-store-cookie__picture {
+  height: 163px;
+  width: 299px;
+  border-radius: 10px;
+}
+
+/* footer */
+footer {
+  height: 90px;
+  background-color: #444;
+  margin-top: 645px;
+}
+
+footer li {
+  display: inline-block;
+  line-height: 90px;
+  margin-left: 90px;
+  font-family: "Montserrat";
+  font-weight: bold;
+}
+
+footer li:first-child {
+  margin-left: 30px;
+}
