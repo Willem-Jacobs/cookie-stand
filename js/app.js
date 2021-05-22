@@ -7,6 +7,7 @@ let companyGrandTotal = 0;
 const companyTosserTotal = new Array(14).fill(0);
 let storeTable = 'store-table-container';
 let tosserTable = 'tosse-table-container';
+const newStoreData = document.querySelectorAll('input');
 
 // Constructor for Store
 function Store(name, min, max, avg) {
@@ -142,6 +143,23 @@ Store.prototype.renderTableFooter = function(tableName) {
   }
 };
 
+function getFormData(event) {
+  event.preventDefault();
+  const storeName = newStoreData[0].value;
+  const minCustomers = +newStoreData[1].value;
+  const maxCustomers = +newStoreData[2].value;
+  const averageSold = +newStoreData[3].value;
+  new Store(storeName, minCustomers, maxCustomers, averageSold);
+  udpateTables();
+}
+
+function udpateTables() {
+  storeArray[storeArray.length - 1].renderTableRow(storeTable);
+  storeArray[storeArray.length - 1].renderTableRow(tosserTable);
+  storeArray[storeArray.length - 1].renderTableFooter(storeTable);
+  storeArray[storeArray.length - 1].renderTableFooter(tosserTable);
+}
+
 function run() {
   new Store('Seattle', 23, 65, 6.3);
   new Store('Tokyo', 3, 24, 1.2);
@@ -168,3 +186,6 @@ function run() {
 }
 
 run();
+
+const form = document.getElementById('add-store-form');
+form.addEventListener('submit', getFormData);
