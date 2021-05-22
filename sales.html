@@ -3,7 +3,7 @@
   <head>
     <title>Pat's Salmon Cookies Botique</title>
     <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/shared.css">
+    <!-- <link rel="stylesheet" href="css/shared.css"> -->
     <link rel="stylesheet" href="css/sales.css">
   </head>
   <body>
@@ -22,6 +22,29 @@
     </nav>
     </header>
     <main>
+      <section id="add-store">
+        <form class="add-store-form" id="add-store-form">
+          <fieldset>
+            <legend>Add New Location</legend>
+      
+            <label for="storeLocation">Store Location: </label>
+            <input type="text" name="storeLocation" required>
+      
+            <label for="minCust">Minimum Customers per Hour: </label>
+            <input type="number" name="minCust" required>
+      
+            <label for="maxCust">Maximum Customers per Hour: </label>
+            <input type="number" name="maxCust" required>
+      
+            <label for="cookiesPerHour">Cookies Sold per Hour</label>
+            <input type="number" name="cookiesPerHour" step="0.1" required>
+
+            <button class="button-reset" type="reset">Reset Form</button>
+            <button class="button-submit" type="submit">Add a Store</button> 
+
+          </fieldset>
+        </form>
+      </section>
       <section id="store-table-container">
         <h2>Store Sales Estimates</h2>
       </section>
