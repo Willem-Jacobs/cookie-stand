@@ -116,6 +116,9 @@ Store.prototype.renderTableRow = function(tableName) {
 
 Store.prototype.renderTableFooter = function(tableName) {
   let tableFooterEl = document.getElementById(`${tableName.substring(0,12)}foot`);
+  while (tableFooterEl.firstChild) {
+    tableFooterEl.removeChild(tableFooterEl.firstChild);
+  }
   let tableFooterRowEl = document.createElement('td');
   tableFooterRowEl.textContent = 'Total';
   tableFooterEl.appendChild(tableFooterRowEl);
@@ -149,6 +152,7 @@ function getFormData(event) {
   const minCustomers = +newStoreData[1].value;
   const maxCustomers = +newStoreData[2].value;
   const averageSold = +newStoreData[3].value;
+  document.getElementById('add-store-form').reset();
   new Store(storeName, minCustomers, maxCustomers, averageSold);
   udpateTables();
 }
