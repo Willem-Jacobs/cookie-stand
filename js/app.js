@@ -7,10 +7,10 @@ let companyGrandTotal = 0;
 const companyTosserTotal = new Array(14).fill(0);
 let storeTable = 'store-table-container';
 let tosserTable = 'tosse-table-container';
-const newStoreData = document.querySelectorAll('input');
 
 // Constructor for Store
-function Store(name, min, max, avg) {
+function Store(id, name, min, max, avg) {
+  this.storeID = id;
   this.storeName = name;
   this.minCustomersPerHour = min;
   this.maxCustomersPerHour = max;
@@ -73,44 +73,61 @@ Store.prototype.renderTableHeader = function(headerData, tableName) {
   tableHeaderRow.appendChild(tableHeaderTotalEl);
 };
 
-Store.prototype.renderTableRow = function(tableName) {
+Store.prototype.renderTableRow = function(tableName, update) {
   if (tableName === 'store-table-container') {
     this.calcCookiesPerHour();
     let tableRowBody = document.getElementById(`${tableName.substring(0,12)}detail`);
-    let tableRowEl = document.createElement('tr');
-    let tableRowDataEl = document.createElement('td');
-    tableRowDataEl.textContent = this.storeName;
-    tableRowEl.appendChild(tableRowDataEl);
-    tableRowBody.appendChild(tableRowEl);
-    for (let i = 0; i < this.cookiesByHourArray.length; i++) {
-      tableRowDataEl = document.createElement('td');
-      tableRowDataEl.textContent = this.cookiesByHourArray[i];
+    if (!update) {
+      let tableRowEl = document.createElement('tr');
+      tableRowEl.id = 'S-' + this.storeID;
+      let tableRowDataEl = document.createElement('td');
+      tableRowDataEl.textContent = this.storeName;
       tableRowEl.appendChild(tableRowDataEl);
+      tableRowBody.appendChild(tableRowEl);
+      for (let i = 0; i < this.cookiesByHourArray.length; i++) {
+        tableRowDataEl = document.createElement('td');
+        tableRowDataEl.textContent = this.cookiesByHourArray[i];
+        tableRowEl.appendChild(tableRowDataEl);
+      }
+      tableRowDataEl = document.createElement('td');
+      tableRowDataEl.textContent = this.dailyCookieTotal;
+      companyGrandTotal += this.dailyCookieTotal;
+      tableRowEl.appendChild(tableRowDataEl);
+    } else {
+      let tableRowToUpdate = document.getElementById(`S-${this.storeID}`);
+      let rowCellCount = tableRowToUpdate.cells.length;
+      for (let i = 0; i < rowCellCount - 1; i++) {
+        tableRowToUpdate.cells[i + 1].textContent = this.cookiesByHourArray[i];
+      }
     }
-    tableRowDataEl = document.createElement('td');
-    tableRowDataEl.textContent = this.dailyCookieTotal;
-    companyGrandTotal += this.dailyCookieTotal;
-    tableRowEl.appendChild(tableRowDataEl);
   }
   if (tableName === 'tosse-table-container') {
     let tableRowBody = document.getElementById(`${tableName.substring(0,12)}detail`);
-    let tableRowEl = document.createElement('tr');
-    let tableRowDataEl = document.createElement('td');
-    tableRowDataEl.textContent = this.storeName;
-    tableRowEl.appendChild(tableRowDataEl);
-    tableRowBody.appendChild(tableRowEl);
-    for (let i = 0; i < this.cookieTossersPerHour.length; i++) {
-      tableRowDataEl = document.createElement('td');
-      tableRowDataEl.textContent = this.cookieTossersPerHour[i];
+    if (!update) {
+      let tableRowEl = document.createElement('tr');
+      tableRowEl.id = 'T-' + this.storeID;
+      let tableRowDataEl = document.createElement('td');
+      tableRowDataEl.textContent = this.storeName;
       tableRowEl.appendChild(tableRowDataEl);
+      tableRowBody.appendChild(tableRowEl);
+      for (let i = 0; i < this.cookieTossersPerHour.length; i++) {
+        tableRowDataEl = document.createElement('td');
+        tableRowDataEl.textContent = this.cookieTossersPerHour[i];
+        tableRowEl.appendChild(tableRowDataEl);
+      }
+      tableRowDataEl = document.createElement('td');
+      // reduce method on array not discussed in class but I know about it
+      tableRowDataEl.textContent = this.cookieTossersPerHour.reduce(function (acc, index) {
+        return acc + index;
+      }, 0);
+      tableRowEl.appendChild(tableRowDataEl);
+    } else {
+      let tableRowToUpdate = document.getElementById(`T-${this.storeID}`);
+      let rowCellCount = tableRowToUpdate.cells.length;
+      for (let i = 0; i < rowCellCount - 1; i++) {
+        tableRowToUpdate.cells[i + 1].textContent = this.cookieTossersPerHour[i];
+      }
     }
-    tableRowDataEl = document.createElement('td');
-    // reduce method on array not discussed in class but I know about it
-    tableRowDataEl.textContent = this.cookieTossersPerHour.reduce(function (acc, index) {
-      return acc + index;
-    }, 0);
-    // companyGrandTotal += this.dailyCookieTotal;
-    tableRowEl.appendChild(tableRowDataEl);
   }
 };
 
@@ -146,47 +163,71 @@ Store.prototype.renderTableFooter = function(tableName) {
   }
 };
 
-function getFormData(event) {
-  event.preventDefault();
-  const storeName = newStoreData[0].value;
-  const minCustomers = +newStoreData[1].value;
-  const maxCustomers = +newStoreData[2].value;
-  const averageSold = +newStoreData[3].value;
-  document.getElementById('add-store-form').reset();
-  new Store(storeName, minCustomers, maxCustomers, averageSold);
-  udpateTables();
+function capFirstLetter(value) {
+  if (typeof value !== 'string') return '';
+  return value.charAt(0).toUpperCase() + value.slice(1);
 }
 
-function udpateTables() {
-  storeArray[storeArray.length - 1].renderTableRow(storeTable);
-  storeArray[storeArray.length - 1].renderTableRow(tosserTable);
-  storeArray[storeArray.length - 1].renderTableFooter(storeTable);
-  storeArray[storeArray.length - 1].renderTableFooter(tosserTable);
+function getFormData(event) {
+  event.preventDefault();
+  const storeName = capFirstLetter(event.target.storeLocation.value);
+  const minCustomers = +event.target.minCust.value;
+  const maxCustomers = +event.target.maxCust.value;
+  const averageSold = +event.target.cookiesPerHour.value;
+  document.getElementById('add-store-form').reset();
+  for (let i = 0; i < storeArray.length; i++) {
+    if (storeArray[i].storeName === storeName) {
+      storeArray[i].minCustomersPerHour = minCustomers;
+      storeArray[i].maxCustomersPerHour = maxCustomers;
+      storeArray[i].avgCookiesPerCustomer = averageSold;
+      storeArray[i].cookiesByHourArray = [];
+      storeArray[i].dailyCookieTotal = 0;
+      storeArray[i].renderTableRow(storeTable, true);
+      storeArray[i].renderTableRow(tosserTable, true);
+      return;
+    }
+  }
+  let storeID = storeArray[storeArray.length - 1].storeID + 1;
+  new Store(storeID, storeName, minCustomers, maxCustomers, averageSold);
+  renderAddTables(storeArray.length -1);
+}
+
+function renderAddTables(index) {
+  storeArray[index].renderTableRow(storeTable, false);
+  storeArray[index].renderTableRow(tosserTable, false);
+  storeArray[index].renderTableFooter(storeTable);
+  storeArray[index].renderTableFooter(tosserTable);
 }
 
 function run() {
-  new Store('Seattle', 23, 65, 6.3);
-  new Store('Tokyo', 3, 24, 1.2);
-  new Store('Dubai', 11, 38, 3.7);
-  new Store('Paris', 20, 38, 2.3);
-  new Store('Lima', 2, 16, 4.6);
+  if (!storeArray.length) {
+    createStoreObjects();
+  }
   for (let i = 0; i < storeArray.length; i++) {
     if (i === 0) {
       storeArray[i].renderTableStructure(storeTable);
       storeArray[i].renderTableHeader(storeArray[i].hours, storeTable);
       storeArray[i].renderTableStructure(tosserTable);
       storeArray[i].renderTableHeader(storeArray[i].hours, tosserTable);
-      storeArray[i].renderTableRow(storeTable);
-      storeArray[i].renderTableRow(tosserTable);
+      storeArray[i].renderTableRow(storeTable, false);
+      storeArray[i].renderTableRow(tosserTable, false);
     } else {
-      storeArray[i].renderTableRow(storeTable);
-      storeArray[i].renderTableRow(tosserTable);
+      storeArray[i].renderTableRow(storeTable, false);
+      storeArray[i].renderTableRow(tosserTable, false);
     }
     if (i === storeArray.length - 1) {
       storeArray[i].renderTableFooter(storeTable);
       storeArray[i].renderTableFooter(tosserTable);
     }
   }
+}
+
+function createStoreObjects() {
+  new Store(1, 'Seattle', 23, 65, 6.3);
+  new Store(2, 'Tokyo', 3, 24, 1.2);
+  new Store(3, 'Dubai', 11, 38, 3.7);
+  new Store(4, 'Paris', 20, 38, 2.3);
+  new Store(5, 'Lima', 2, 16, 4.6);
 }
 
 run();
