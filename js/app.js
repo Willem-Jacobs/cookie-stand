@@ -2,9 +2,9 @@
 
 // Global Variables
 const storeArray = [];
-const companyTotalByHour = new Array(14).fill(0);
+let companyTotalByHour = new Array(14).fill(0);
 let companyGrandTotal = 0;
-const companyTosserTotal = new Array(14).fill(0);
+let companyTosserTotal = new Array(14).fill(0);
 let storeTable = 'store-table-container';
 let tosserTable = 'tosse-table-container';
 
@@ -94,11 +94,15 @@ Store.prototype.renderTableRow = function(tableName, update) {
       companyGrandTotal += this.dailyCookieTotal;
       tableRowEl.appendChild(tableRowDataEl);
     } else {
+      // companyTotalByHour = new Array(14).fill(0);
+      // companyGrandTotal = 0;
       let tableRowToUpdate = document.getElementById(`S-${this.storeID}`);
       let rowCellCount = tableRowToUpdate.cells.length;
       for (let i = 0; i < rowCellCount - 1; i++) {
         tableRowToUpdate.cells[i + 1].textContent = this.cookiesByHourArray[i];
       }
+      tableRowToUpdate.cells[rowCellCount - 1].textContent = this.dailyCookieTotal;
+      this.renderTableFooter(storeTable);
     }
   }
   if (tableName === 'tosse-table-container') {
@@ -127,6 +131,7 @@ Store.prototype.renderTableRow = function(tableName, update) {
       for (let i = 0; i < rowCellCount - 1; i++) {
         tableRowToUpdate.cells[i + 1].textContent = this.cookieTossersPerHour[i];
       }
+      this.renderTableFooter(tosserTable);
     }
   }
 };
