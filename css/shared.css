@@ -10,6 +10,7 @@
 body {
   background-color: #b1a7a7;
   font-family: 'Montserrat', Arial, Helvetica, sans-serif; /* Custom Font */
+  padding-top: 50px;
 }
 
 main {
