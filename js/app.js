@@ -109,7 +109,7 @@ Store.prototype.renderTableRow = function(tableName) {
     tableRowDataEl.textContent = this.cookieTossersPerHour.reduce(function (acc, index) {
       return acc + index;
     }, 0);
-    companyGrandTotal += this.dailyCookieTotal;
+    // companyGrandTotal += this.dailyCookieTotal;
     tableRowEl.appendChild(tableRowDataEl);
   }
 };
